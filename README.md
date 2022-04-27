@@ -1,6 +1,9 @@
 # pi2-sat-server
 
-Instructions
+Instructions:
 
+```
 npm install express nodemon body-parser
+
 npm start
+```
