@@ -1,0 +1,17 @@
+{
+  "name": "sat-server",
+  "version": "1.0.0",
+  "description": "nodejs express server",
+  "main": "index.js",
+  "scripts": {
+    "start": "nodemon app.js",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "mateo",
+  "license": "ISC",
+  "dependencies": {
+    "body-parser": "^1.20.0",
+    "express": "^4.18.0",
+    "nodemon": "^2.0.15"
+  }
+}
