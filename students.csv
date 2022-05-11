@@ -1,3 +1,8 @@
-name, lastname, studentCode, identificationCard, missingWork
-Esteban, Ariza Acosta, A00358614, 1007678665, 1
-Mateo, Valdes Otero, A00358615, 1007678666, 2
+name,lastname,studentCode,identificationCard,missingWork,weightedAverage
+Mateo,Valdes Otero,1,1,1,5.0
+Esteban,Ariza Acosta,2,2,2,4.5
+Samuel,Satizabal Tascon,3,3,3,4.2
+Johan Sebastian,Giraldo Rubio,4,4,4,4.3
+Juan David,Ossa Ossa,5,5,5,3.5
+Ernesto,Betancur Ramirez,6,6,2,3.0
+Christian,Flor Astudillo,7,7,3,4.8

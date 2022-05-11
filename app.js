@@ -1,30 +1,14 @@
 const express = require('express');
+const csv = require('jquery-csv');
+const fs = require('fs');
 const bodyParser = require('body-parser');
 const app = express();
 const PORT = 12345;
 
 app.use(bodyParser.json());
 
-class Student{
-    constructor(name, lastname, studentCode, identificationCard, missingWork, weightedAverage){
-        this.name = name;
-        this.lastname = lastname;
-        this.studentCode = studentCode;
-        this.identificationCard = identificationCard;
-        this.missingWork = missingWork;
-        this.weightedAverage = weightedAverage;
-    }
-}
-
-let students = [
-    new Student('Mateo','Valdes Otero','1','1',1, 5),
-    new Student('Esteban','Ariza Acosta','2','2',2, 4.5),
-    new Student('Samuel','Satizabal Tascon','3','3',3, 4.2),
-    new Student('Johan Sebastian','Giraldo Rubio','4','4',4, 4.3),
-    new Student('Juan David','Ossa Ossa','5','5',5, 3.5),
-    new Student('Ernesto','N/A','6','6',2, 3.0),
-    new Student('Christian','Flor Astudillo','7','7',3, 4.8),
-];
+//Attributes
+var students = [];
 
 //Methods
 const logicalComparator = {
@@ -36,8 +20,18 @@ const logicalComparator = {
     '<>': function (x, y) { return x != y },
 };
 
-function loadCSV(csv){
-    console.log("LOADED :)");
+function loadCSV(path){
+    let rawCsv = "";
+
+    try {
+        rawCsv = fs.readFileSync(path, 'utf8');
+    } catch (err) {
+        console.error(err);
+    }
+
+    students = csv.toObjects(rawCsv);
+
+    console.log("Data loaded from: \'"+path+"\'");
 }
 
 function findStudentsStudentCode(studentCodes){
@@ -71,7 +65,8 @@ app.post('/students/query/:data', (req, res) => {
 
     let info = [];
     studentsQuery.forEach(i =>{
-        if(logicalComparator[operator](i[column], value))
+        actualValue = i[column]
+        if(logicalComparator[operator](actualValue, value))
             info.push(i['studentCode']);
     });
     
@@ -80,8 +75,8 @@ app.post('/students/query/:data', (req, res) => {
 });
 
 
-app.post('/students/identificationcard', (req, res) => {
-    let value = req.body.identificationCard;
+app.get('/students/identificationcard/:id', (req, res) => {
+    let value = req.params.id;
 
     let info = undefined;
     students.forEach(i =>{
@@ -93,8 +88,8 @@ app.post('/students/identificationcard', (req, res) => {
     res.send(info);
 });
 
-app.post('/students/studentCode', (req, res) => {
-    let value = req.body.studentCode;
+app.get('/students/studentCode/:id', (req, res) => {
+    let value = req.params.id;
 
     let info = undefined;
     students.forEach(i =>{
