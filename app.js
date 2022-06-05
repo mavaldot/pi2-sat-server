@@ -28,11 +28,32 @@ const logicalComparator = {
     '<>': function (x, y) { return x != y },
 };
 
+const evaluate = (student, param, operator, value) => {
+
+    if (operator === '=') operator = '===';
+
+    switch (param) {
+        case "missingWork":
+            str = `${student.missingWork} ${operator} ${value}`;
+            console.log(str);
+            return (eval(str));
+        default:
+            console.log("Error");
+    }
+
+    // str = `${param} ${operator} ${value}`;
+    // console.log(str);
+    // console.log(eval(str));
+    // return (eval(str)); 
+}
+
+evaluate("b", "1", ">", "2");
+
 /**
  * Load the CSV file that have the students from Intu with their information.
  * @param {string} path - The relative path of the CSV
  * @example
- * //Load file 'students.csv' if the file is in the same foldar as 'app.js'
+ * //Load file 'students.csv' if the file is in the same folder as 'app.js'
  * loadCSV('students.csv')
  */
 function loadCSV(path){
@@ -183,8 +204,29 @@ app.get('/students/studentcode/:id', (req, res) => {
     res.send(info);
 });
 
+app.post('/students/filter', (req, res) => {
+    let list = req.body.students;
+    let param = req.body.param;
+    let operator = req.body.operator;
+    let value = req.body.value;
+    let ret = [];
+
+    students.forEach(s => {
+        if (evaluate(s, param, operator, value)) ret.push(s);
+    });
+
+    myRes = {
+        "students": ret
+    };
+
+    console.log(ret);
+    res.send(ret);
+});
+
 //Port
 app.listen(PORT, () => {
     loadCSV("students.csv");
+    evaluate("b", "1", ">", "2");
+    console.log("a");
     console.log(`Started on port: ${PORT}`);
 });
