@@ -47,8 +47,6 @@ const evaluate = (student, param, operator, value) => {
     // return (eval(str)); 
 }
 
-evaluate("b", "1", ">", "2");
-
 /**
  * Load the CSV file that have the students from Intu with their information.
  * @param {string} path - The relative path of the CSV
@@ -215,10 +213,6 @@ app.post('/students/filter', (req, res) => {
         if (evaluate(s, param, operator, value)) ret.push(s);
     });
 
-    myRes = {
-        "students": ret
-    };
-
     console.log(ret);
     res.send(ret);
 });
@@ -226,7 +220,5 @@ app.post('/students/filter', (req, res) => {
 //Port
 app.listen(PORT, () => {
     loadCSV("students.csv");
-    evaluate("b", "1", ">", "2");
-    console.log("a");
     console.log(`Started on port: ${PORT}`);
 });
